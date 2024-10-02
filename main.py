@@ -8,11 +8,9 @@ from random import randint
 
 # created a game class to instantiate later
 # it will have all the neccessary parts to run the game
-
-# used to organize parts used to create the game
+# game class is used to organize parts used to create the game
 class Game:
-    # __init__ method: creates an instance of itself
-    # Sets things up such as the game window name, width and height, the time, and if it is running or not
+    # __init__ method: initlaizes all the necessary components for the game, including audio and video
     def __init__(self):
         # initializes the ability to use pygame
         pg.init()
@@ -35,7 +33,7 @@ class Game:
         self.player = Player(self, 1,1)
         self.mob = Mob(self, 100, 100)
         # makes new mobs and walls using a for loop
-        for i in range(6):
+        for i in range(10):
             Mob(self, i*randint(0, 200), i * randint (0, 200))
             Wall(self, i*TILESIZE, i*TILESIZE)
     

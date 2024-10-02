@@ -7,14 +7,14 @@ import random
 
 class Player(Sprite):
     def __init__(self, game, x, y):
+        # Links up self.groups and main through game.all_sprites
         self.groups = game.all_sprites
+        # Initializes the sprite in the group of all the players
         Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((TILESIZE,TILESIZE))
         self.rect = self.image.get_rect()
         self.image.fill(RED)
-        # self.rect.x = x
-        # self.rect.y = y
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.speed = 10

@@ -47,9 +47,7 @@ class Game:
         
         # takes map.data and parses it using enumerate so that we can assign x y values to each object instance
         for row, tiles in enumerate(self.map.data):
-            print(row)
             for col, tile in enumerate(tiles):
-                print(col)
                 # If there is a 1, it creates a wall there with the x and y value being the column and row
                 if tile == '1':
                     Wall(self, col, row)

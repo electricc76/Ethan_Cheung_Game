@@ -42,7 +42,9 @@ class Game:
         # defines properties that can be seen in the game system
         self.all_sprites = pg.sprite.Group()
         self.all_walls = pg.sprite.Group()
+        self.all_mobs = pg.sprite.Group
         self.all_powerups = pg.sprite.Group()
+        self.all_coins = pg.sprite.Group()
         # makes new mobs and walls using a for loop
         
         # takes map.data and parses it using enumerate so that we can assign x y values to each object instance
@@ -57,8 +59,9 @@ class Game:
                     Mob(self, col, row)
                 if tile == 'U':
                     Powerup(self, col, row)
+                if tile == 'C':
+                    Coin(self, col, row)
                     
-    
     # if the game is running (self.running = TRUE), the methods are called. events() lists out any 
     # events that happen at that time. update() updates everything about the game once per tick. draw() actually
     # draws out the new updated screen
@@ -83,7 +86,6 @@ class Game:
         self.all_sprites.update()
 
         # output
-        pass
 
     def draw_text(self, surface, text, size, color, x, y):
         font_name = pg.font.match_font("arial")
@@ -99,7 +101,8 @@ class Game:
         self.screen.fill(BLACK)
         self.all_sprites.draw(self.screen)
         self.draw_text(self.screen, str(self.dt*1000), 24, WHITE, WIDTH / 24, HEIGHT / 24)
-        self.draw_text(self.screen, "This game is awesome", 24, WHITE, WIDTH / 2, HEIGHT / 24)
+        self.draw_text(self.screen, "Coins collected: " + str(self.player.coins), 24, WHITE, WIDTH / 2, HEIGHT / 24)
+        self.draw_text(self.screen, "Game Name", 24, WHITE, WIDTH / 2, HEIGHT / 192)
         pg.display.flip()
 
 

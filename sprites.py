@@ -19,6 +19,7 @@ class Player(Sprite):
         self.y = y * TILESIZE
         self.speed = 10
         self.vx, self.vy = 0, 0
+        self.coins = 0
     
     def get_keys(self):
         # Load anything pressed on the keyboard into the variable "keys"
@@ -61,6 +62,9 @@ class Player(Sprite):
             if str(hits[0].__class__.__name__) == "Powerup":
                 self.speed += 5
                 print("I hit a powerup  :D")
+            if str(hits[0].__class__.__name__) == "Coin":
+                print("$  $  $  $  $")
+                self.coins += 1
 
     def update(self):
         self.get_keys()
@@ -68,6 +72,7 @@ class Player(Sprite):
         self.y += self.vy * self.game.dt
 
         self.collide_with_stuff(self.game.all_powerups, True)
+        self.collide_with_stuff(self.game.all_coins, True)
 
         # check for x position then correct it. Check for y position then correct it. Order is critical
         self.rect.x = self.x
@@ -120,6 +125,17 @@ class Powerup(Sprite):
         Sprite.__init__(self, self.groups)
         self.image = pg.Surface((TILESIZE, TILESIZE))
         self.image.fill(PINK)
+        self.rect = self.image.get_rect()
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+
+class Coin(Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self.groups = game.all_sprites, game.all_coins
+        Sprite.__init__(self, self.groups)
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE

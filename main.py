@@ -99,7 +99,6 @@ class Game:
         self.screen.fill(BLACK)
         self.all_sprites.draw(self.screen)
         self.draw_text(self.screen, str(self.dt*1000), 24, WHITE, WIDTH / 24, HEIGHT / 24)
-        # self.draw_text(self.screen, str(speedrun_timer), 24, WHITE, WIDTH / 24, HEIGHT / 24)
         self.draw_text(self.screen, "This game is awesome", 24, WHITE, WIDTH / 2, HEIGHT / 24)
         pg.display.flip()
 

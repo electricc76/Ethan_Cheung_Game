@@ -59,6 +59,7 @@ class Player(Sprite):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == "Powerup":
+                self.speed += 5
                 print("I hit a powerup  :D")
 
     def update(self):

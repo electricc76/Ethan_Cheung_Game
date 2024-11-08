@@ -4,8 +4,6 @@ import pygame as pg
 from pygame.sprite import Sprite
 from settings import *
 import random
-from tilemap import *
-from os import path
 
 # vector - force and direction
 # (x, y)
@@ -125,26 +123,6 @@ class Player(Sprite):
                 self.kill()
             if str(hits[0].__class__.__name__) == "Portal":
                 print("Collided with portal")
-                self.next_level(self)
-
-        for row, tiles in enumerate(self.map.data):
-            for col, tile in enumerate(tiles):
-                # If there is a 1, it creates a wall there with the x and y value being the column and row
-                if tile == '1':
-                    Wall(self, col, row)
-                if tile == 'P':
-                    self.player = Player(self, col, row)
-                if tile == 'U':
-                    Powerup(self, col, row)
-                if tile == 'C':
-                    Coin(self, col, row)
-                if tile == 'S':
-                    Spike(self, col, row)
-                if tile == 'M':
-                    Mob(self, col, row)
-                if tile == 'O':
-                    Portal(self, col, row)
-        
 
 
     def update(self):

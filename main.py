@@ -26,11 +26,12 @@ Sources:
 
 # import all necessary modules and libraries
 import pygame as pg
-
-from tilemap import *
 from settings import *
+from sprites_sidescroller import *
 from sprites import *
+from tilemap import *
 from os import path
+import sys
 from random import randint
 
 # created a game class to instantiate later
@@ -68,7 +69,9 @@ class Game:
         self.all_walls = pg.sprite.Group()
         self.all_mobs = pg.sprite.Group
         self.all_powerups = pg.sprite.Group()
+        self.all_spikes = pg.sprite.Group()
         self.all_coins = pg.sprite.Group()
+        self.all_portals = pg.sprite.Group()
         # makes new mobs and walls using a for loop
         
         # takes map.data and parses it using enumerate so that we can assign x y values to each object instance
@@ -85,6 +88,10 @@ class Game:
                     Powerup(self, col, row)
                 if tile == 'C':
                     Coin(self, col, row)
+                if tile == 'S':
+                    Spike(self, col, row)
+                if tile == 'O':
+                    Portal(self, col, row)
                     
     # if the game is running (self.running = TRUE), the methods are called. events() lists out any 
     # events that happen at that time. update() updates everything about the game once per tick. draw() actually

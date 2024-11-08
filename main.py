@@ -28,7 +28,6 @@ Sources:
 import pygame as pg
 from settings import *
 from sprites_sidescroller import *
-from sprites import *
 from tilemap import *
 from os import path
 import sys
@@ -65,6 +64,7 @@ class Game:
         self.load_data()
         # creates all_sprites group so we can batch update and render
         # defines properties that can be seen in the game system
+        self.all_players = pg.sprite.Group()
         self.all_sprites = pg.sprite.Group()
         self.all_walls = pg.sprite.Group()
         self.all_mobs = pg.sprite.Group

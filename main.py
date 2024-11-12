@@ -1,4 +1,5 @@
 # this file was created by Ethan Cheung
+# Mr. Cozort Said I had to
 
 '''
 Elevator Pitch: I want to create a game

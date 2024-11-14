@@ -60,7 +60,6 @@ class Game:
         # join the game_folder
         self.map = Map(path.join(self.game_folder, 'level1.txt'))
 
-
     def new(self):
         self.load_data()
         # creates all_sprites group so we can batch update and render
@@ -68,7 +67,7 @@ class Game:
         self.all_players = pg.sprite.Group()
         self.all_sprites = pg.sprite.Group()
         self.all_walls = pg.sprite.Group()
-        self.all_mobs = pg.sprite.Group
+        self.all_mobs = pg.sprite.Group()
         self.all_powerups = pg.sprite.Group()
         self.all_spikes = pg.sprite.Group()
         self.all_coins = pg.sprite.Group()

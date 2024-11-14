@@ -34,6 +34,7 @@ class Player(Sprite):
         self.jump_power = 15
         self.double_jump_power = 15
         self.coins = 0
+        self.level = 1
 
     def get_keys(self):
         # Load anything pressed on the keyboard into the variable "keys"
@@ -122,7 +123,9 @@ class Player(Sprite):
                 print("Collided with Mob")
                 self.kill()
             if str(hits[0].__class__.__name__) == "Portal":
+                self.level += 1
                 print("Collided with portal")
+                print(str(self.level))
 
 
     def update(self):

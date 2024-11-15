@@ -92,7 +92,7 @@ class Game:
                     Spike(self, col, row)
                 if tile == 'O':
                     Portal(self, col, row)
-                    
+
     # if the game is running (self.running = TRUE), the methods are called. events() lists out any 
     # events that happen at that time. update() updates everything about the game once per tick. draw() actually
     # draws out the new updated screen

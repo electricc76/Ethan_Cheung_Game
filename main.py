@@ -52,13 +52,38 @@ class Game:
         self.clock = pg.time.Clock()
         # is the game running or not? Yes
         self.running = True
+        self.level = 1
     
     # loads all the data such as audio and level design by reading text file
     def load_data(self):
         # creates game_folder
         self.game_folder = path.dirname(__file__)
         # join the game_folder
-        self.map = Map(path.join(self.game_folder, 'level1.txt'))
+        self.map = Map(path.join(self.game_folder, 'level'+str(self.level)+'.txt'))
+
+    def next_level(self):
+        for s in self.all_sprites:
+            s.kill()
+        self.level += 1
+        self.map = Map(path.join(self.game_folder, 'level'+str(self.level)+'.txt'))
+        for row, tiles in enumerate(self.map.data):
+            for col, tile in enumerate(tiles):
+                # If there is a 1, it creates a wall there with the x and y value being the column and row
+                if tile == '1':
+                    Wall(self, col, row)
+                if tile == 'P':
+                    self.player = Player(self, col, row)
+                if tile == 'M':
+                    Mob(self, col, row)
+                if tile == 'U':
+                    Powerup(self, col, row)
+                if tile == 'C':
+                    Coin(self, col, row)
+                if tile == 'S':
+                    Spike(self, col, row)
+                if tile == 'O':
+                    Portal(self, col, row)
+
 
     def new(self):
         self.load_data()

@@ -123,6 +123,7 @@ class Player(Sprite):
                 self.kill()
             if str(hits[0].__class__.__name__) == "Portal":
                 print("Collided with portal")
+                self.game.next_level()
                 
 
 

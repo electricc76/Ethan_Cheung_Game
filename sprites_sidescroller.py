@@ -31,8 +31,8 @@ class Player(Sprite):
         self.jumping = False
         # is the player in the process of double jumping
         self.double_jumping = False
-        self.jump_power = 15
-        self.double_jump_power = 15
+        self.jump_power = 13
+        self.double_jump_power = 11
         self.coins = 0
 
     def get_keys(self):
@@ -106,8 +106,8 @@ class Player(Sprite):
         hits = pg.sprite.spritecollide(self, group, kill)
         if hits:
             if str(hits[0].__class__.__name__) == "Powerup":
-                self.jump_power -= 2
-                self.double_jump_power -= 4
+                self.jump_power += 2
+                self.double_jump_power += 4
                 print("I hit a powerup  :D")
             # upon hitting coin, gain coin
             if str(hits[0].__class__.__name__) == "Coin":

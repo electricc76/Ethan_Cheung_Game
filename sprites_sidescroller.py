@@ -181,8 +181,13 @@ class Mob(Sprite):
         # change your position based on the speed number
         self.rect.x += self.speed
         # if your right hits the width of the screen - 1 tile, turn around. Same with left side
-        if self.rect.right > WIDTH - TILESIZE or self.rect.left < TILESIZE:
-            self.speed *= -1
+
+        hits = pg.sprite.spritecollide(self, self.game.all_walls, False)
+        if hits:
+            if self.rect.right > 0:
+                self.speed *= -1
+            if self.rect.left < 0:
+                self.speed *= -1
             
 class Wall(Sprite):
     def __init__(self, game, x, y):

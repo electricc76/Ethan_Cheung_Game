@@ -70,6 +70,8 @@ class Game:
         # remove all existing sprites before redrawing them on
         for s in self.all_sprites:
             s.kill()
+        self.player.jump_power = 13
+        self.player.double_jump_power = 11
         self.level += 1
         self.map = Map(path.join(self.game_folder, 'level'+str(self.level)+'.txt'))
         for row, tiles in enumerate(self.map.data):

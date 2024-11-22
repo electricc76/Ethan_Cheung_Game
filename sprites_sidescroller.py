@@ -67,6 +67,7 @@ class Player(Sprite):
         if self.double_jumping == False:
             self.vel.y = -self.double_jump_power
             self.double_jumping = True
+            self.game.double_jump_snd.play()
         else:
             pass
     

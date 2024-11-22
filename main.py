@@ -59,10 +59,15 @@ class Game:
     def load_data(self):
         # creates game_folder
         self.game_folder = path.dirname(__file__)
+        self.snd_folder = path.join(self.game_folder, 'sounds')
         # join the game_folder
         self.map = Map(path.join(self.game_folder, 'level'+str(self.level)+'.txt'))
 
+        # load sounds
+        self.double_jump_snd = pg.mixer.Sound(path.join(self.snd_folder, 'double_jump.wav'))
+
     def next_level(self):
+        # remove all existing sprites before redrawing them on
         for s in self.all_sprites:
             s.kill()
         self.level += 1

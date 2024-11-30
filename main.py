@@ -65,6 +65,8 @@ class Game:
 
         # load sounds
         self.double_jump_snd = pg.mixer.Sound(path.join(self.snd_folder, 'double_jump.wav'))
+        self.jump_snd = pg.mixer.Sound(path.join(self.snd_folder, 'jump.mp3'))
+        self.death_snd = pg.mixer.Sound(path.join(self.snd_folder, 'death.mp3'))
 
     def next_level(self):
         # remove all existing sprites before redrawing them on

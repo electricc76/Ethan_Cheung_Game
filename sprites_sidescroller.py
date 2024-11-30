@@ -62,6 +62,8 @@ class Player(Sprite):
             self.jumping = True
             self.vel.y = -self.jump_power
             print("B o i n g")
+            self.game.jump_snd.play()
+
     
     def double_jump(self): 
         if self.double_jumping == False:
@@ -117,6 +119,7 @@ class Player(Sprite):
             # upon hitting spike, delete player
             if str(hits[0].__class__.__name__) == "Spike":
                 print("Collided with Spike")
+                self.game.death_snd.play()
                 self.kill()
             # upon hitting mob, delete player
             if str(hits[0].__class__.__name__) == "Mob":

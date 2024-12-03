@@ -6,9 +6,9 @@ Elevator Pitch: I want to create a game
 
 GOALS: Go down into the Crypt, collect the crown of Mac Guffin, and get out alive
 RULES: Player will die when hitting traps, player can stand on platforms, Player 
-can jump, double jump, and/or dash to move around
-FEEDBACK: Sound effects upon jumping, dashing, and dying. Death and time counter at
-the top of the screen
+can jump and double jump to move around. Jump height fixed
+FEEDBACK: Sound effects upon jumping, dashing, and dying. Death, coins collected,
+and time counter at the top of the screen
 FREEDOM: Player can move around as they wish, may be ways to complete levels in
 different ways.
 

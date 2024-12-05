@@ -54,11 +54,26 @@ class Game:
         # is the game running or not? Yes
         self.running = True
         self.level = 1
+        self.score = 0
     
     # loads all the data such as audio and level design by reading text file
     def load_data(self):
         # creates game_folder
         self.game_folder = path.dirname(__file__)
+        # Load high score file
+
+        # from chatGPT - prompt: with open
+        with open(path.join(self.game_folder, HS_FILE), 'w') as f:
+            f.write(str(self.highscore))
+
+        print("file created and written successfully")
+
+        with open(path.join(self.game_folder, HS_FILE), 'r') as f:
+            try:
+                self.highscore = int(f.read())
+            except:
+                self.highscore = 0
+        
         self.snd_folder = path.join(self.game_folder, 'sounds')
         # join the game_folder
         self.map = Map(path.join(self.game_folder, 'level'+str(self.level)+'.txt'))
@@ -144,6 +159,10 @@ class Game:
     def events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
+                if self.score > self.highscore:
+                    self.highscore = self.score
+                    with open(path.join(self.dir, HS_FILE), 'w') as f:
+                        f.write(str(self.score))
                 self.running = False
                 
         # process

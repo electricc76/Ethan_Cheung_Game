@@ -112,11 +112,12 @@ class Player(Sprite):
                 self.jump_power += 2
                 self.double_jump_power += 4
                 print("I hit a powerup  :D")
+                self.game.powerup_snd.play()
             # upon hitting coin, gain coin
             if str(hits[0].__class__.__name__) == "Coin":
                 print("$  $  $  $  $")
                 self.coins += 1
-                self.game.highscore += 1
+                self.game.coin_snd.play()
             # upon hitting spike, delete player
             if str(hits[0].__class__.__name__) == "Spike":
                 print("Collided with Spike")
@@ -125,6 +126,7 @@ class Player(Sprite):
             # upon hitting mob, delete player
             if str(hits[0].__class__.__name__) == "Mob":
                 print("Collided with Mob")
+                self.game.death_snd.play()
                 self.kill()
             if str(hits[0].__class__.__name__) == "Portal":
                 print("Collided with portal")

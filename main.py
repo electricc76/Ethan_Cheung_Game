@@ -83,6 +83,8 @@ class Game:
         self.double_jump_snd = pg.mixer.Sound(path.join(self.snd_folder, 'double_jump.wav'))
         self.jump_snd = pg.mixer.Sound(path.join(self.snd_folder, 'jump.mp3'))
         self.death_snd = pg.mixer.Sound(path.join(self.snd_folder, 'death.mp3'))
+        self.powerup_snd = pg.mixer.Sound(path.join(self.snd_folder, 'powerup.wav'))
+        self.coin_snd = pg.mixer.Sound(path.join(self.snd_folder, 'coin.mp3'))
 
     def next_level(self):
         # remove all existing sprites before redrawing them on
@@ -186,9 +188,10 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
         self.all_sprites.draw(self.screen)
+        ticks = pg.time.get_ticks()
         self.draw_text(self.screen, str(self.dt*1000), 24, WHITE, WIDTH / 24, HEIGHT / 24)
         self.draw_text(self.screen, "Coins collected: " + str(self.player.coins), 24, WHITE, WIDTH / 2, HEIGHT / 24)
-        self.draw_text(self.screen, "Game Name", 24, WHITE, WIDTH / 2, HEIGHT / 192)
+        self.draw_text(self.screen, "Timer: "+str(ticks/1000), 24, WHITE, WIDTH / 2, HEIGHT / 192)
         pg.display.flip()
 
 

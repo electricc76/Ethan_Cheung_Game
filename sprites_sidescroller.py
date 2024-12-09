@@ -116,7 +116,7 @@ class Player(Sprite):
             if str(hits[0].__class__.__name__) == "Coin":
                 print("$  $  $  $  $")
                 self.coins += 1
-                self.game.score += 1
+                self.game.highscore += 1
             # upon hitting spike, delete player
             if str(hits[0].__class__.__name__) == "Spike":
                 print("Collided with Spike")

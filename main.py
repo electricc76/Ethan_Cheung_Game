@@ -55,6 +55,7 @@ class Game:
         self.running = True
         self.level = 1
         self.score = 0
+        self.highscore = 0
     
     # loads all the data such as audio and level design by reading text file
     def load_data(self):

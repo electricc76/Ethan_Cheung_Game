@@ -249,3 +249,19 @@ class Portal(Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+
+
+class Boss(Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self.groups = game.all_sprites, game.all_bosses
+        # initialize yourself in all of your groups
+        Sprite.__init__(self, self.groups)
+        self.image = pg.Surface((TILESIZE * 4,TILESIZE * 4))
+        self.rect = self.image.get_rect()
+        # mob is green
+        self.image.fill(GREEN)
+        self.rect.x = x * TILESIZE * 4
+        self.rect.y = y * TILESIZE * 4
+    def update(self):
+        pass

@@ -111,6 +111,8 @@ class Game:
                     Spike(self, col, row)
                 if tile == 'O':
                     Portal(self, col, row)
+                if tile == 'B':
+                    Boss(self, col, row)
 
 
     def new(self):
@@ -125,6 +127,7 @@ class Game:
         self.all_spikes = pg.sprite.Group()
         self.all_coins = pg.sprite.Group()
         self.all_portals = pg.sprite.Group()
+        self.all_bosses = pg.sprite.Group()
         # makes new mobs and walls using a for loop
         
         # takes map.data and parses it using enumerate so that we can assign x y values to each object instance
@@ -145,6 +148,8 @@ class Game:
                     Spike(self, col, row)
                 if tile == 'O':
                     Portal(self, col, row)
+                if tile == 'B':
+                    Boss(self, col, row)
 
     # if the game is running (self.running = TRUE), the methods are called. events() lists out any 
     # events that happen at that time. update() updates everything about the game once per tick. draw() actually

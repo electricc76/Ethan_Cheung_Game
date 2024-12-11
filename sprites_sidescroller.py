@@ -33,7 +33,7 @@ class Player(Sprite):
         self.double_jumping = False
         self.jump_power = 13
         self.double_jump_power = 11
-        self.coins = 0
+        self.level_coins = 0
 
     def get_keys(self):
         # Load anything pressed on the keyboard into the variable "keys"
@@ -116,7 +116,7 @@ class Player(Sprite):
             # upon hitting coin, gain coin
             if str(hits[0].__class__.__name__) == "Coin":
                 print("$  $  $  $  $")
-                self.coins += 1
+                self.level_coins += 1
                 self.game.coin_snd.play()
             # upon hitting spike, delete player
             if str(hits[0].__class__.__name__) == "Spike":

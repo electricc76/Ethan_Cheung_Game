@@ -57,6 +57,7 @@ class Game:
         self.score = 0
         self.highscore = 0
         self.death_counter = 0
+        self.coins = 0
     
     # loads all the data such as audio and level design by reading text file
     def load_data(self):
@@ -95,6 +96,7 @@ class Game:
         self.player.double_jump_power = 11
         self.map = Map(path.join(self.game_folder, 'level'+str(self.level)+'.txt'))
         self.death_counter += 1
+        self.player.level_coins = 0
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 # If there is a 1, it creates a wall there with the x and y value being the column and row
@@ -123,6 +125,8 @@ class Game:
         self.player.double_jump_power = 11
         self.level += 1
         self.map = Map(path.join(self.game_folder, 'level'+str(self.level)+'.txt'))
+        self.coins += self.player.level_coins
+        self.player.level_coins = 0
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 # If there is a 1, it creates a wall there with the x and y value being the column and row
@@ -224,9 +228,10 @@ class Game:
         self.all_sprites.draw(self.screen)
         ticks = pg.time.get_ticks()
         self.draw_text(self.screen, str(self.dt*1000), 24, WHITE, WIDTH / 24, HEIGHT / 24)
-        self.draw_text(self.screen, "Coins collected: " + str(self.player.coins), 24, WHITE, WIDTH / 2, HEIGHT / 24)
+        self.draw_text(self.screen, "Total Coins: " + str(self.coins), 24, WHITE, WIDTH / 3, HEIGHT / 192)
+        self.draw_text(self.screen, "Current Coins: " + str(self.player.level_coins), 24, WHITE, 2 * WIDTH / 3, HEIGHT / 192)
         self.draw_text(self.screen, "Timer: "+str(ticks/1000), 24, WHITE, WIDTH / 2, HEIGHT / 192)
-        self.draw_text(self.screen, "Deaths: "+str(self.death_counter), 24, WHITE, WIDTH / 4, HEIGHT / 192)
+        self.draw_text(self.screen, "Deaths: "+str(self.death_counter), 24, WHITE, WIDTH / 6, HEIGHT / 192)
         pg.display.flip()
 
 

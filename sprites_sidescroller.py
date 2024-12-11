@@ -122,12 +122,13 @@ class Player(Sprite):
             if str(hits[0].__class__.__name__) == "Spike":
                 print("Collided with Spike")
                 self.game.death_snd.play()
-                self.kill()
+                self.game.death()
+            
             # upon hitting mob, delete player
             if str(hits[0].__class__.__name__) == "Mob":
                 print("Collided with Mob")
                 self.game.death_snd.play()
-                self.kill()
+                self.game.death()
             if str(hits[0].__class__.__name__) == "Portal":
                 print("Collided with portal")
                 self.game.next_level()

@@ -56,6 +56,7 @@ class Game:
         self.level = 1
         self.score = 0
         self.highscore = 0
+        self.death_counter = 0
     
     # loads all the data such as audio and level design by reading text file
     def load_data(self):
@@ -85,6 +86,34 @@ class Game:
         self.death_snd = pg.mixer.Sound(path.join(self.snd_folder, 'death.mp3'))
         self.powerup_snd = pg.mixer.Sound(path.join(self.snd_folder, 'powerup.wav'))
         self.coin_snd = pg.mixer.Sound(path.join(self.snd_folder, 'coin.mp3'))
+
+    def death(self):
+        # remove all existing sprites before redrawing them on
+        for s in self.all_sprites:
+            s.kill()
+        self.player.jump_power = 13
+        self.player.double_jump_power = 11
+        self.map = Map(path.join(self.game_folder, 'level'+str(self.level)+'.txt'))
+        self.death_counter += 1
+        for row, tiles in enumerate(self.map.data):
+            for col, tile in enumerate(tiles):
+                # If there is a 1, it creates a wall there with the x and y value being the column and row
+                if tile == '1':
+                    Wall(self, col, row)
+                if tile == 'P':
+                    self.player = Player(self, col, row)
+                if tile == 'M':
+                    Mob(self, col, row)
+                if tile == 'U':
+                    Powerup(self, col, row)
+                if tile == 'C':
+                    Coin(self, col, row)
+                if tile == 'S':
+                    Spike(self, col, row)
+                if tile == 'O':
+                    Portal(self, col, row)
+                if tile == 'B':
+                    Boss(self, col, row)
 
     def next_level(self):
         # remove all existing sprites before redrawing them on
@@ -197,6 +226,7 @@ class Game:
         self.draw_text(self.screen, str(self.dt*1000), 24, WHITE, WIDTH / 24, HEIGHT / 24)
         self.draw_text(self.screen, "Coins collected: " + str(self.player.coins), 24, WHITE, WIDTH / 2, HEIGHT / 24)
         self.draw_text(self.screen, "Timer: "+str(ticks/1000), 24, WHITE, WIDTH / 2, HEIGHT / 192)
+        self.draw_text(self.screen, "Deaths: "+str(self.death_counter), 24, WHITE, WIDTH / 4, HEIGHT / 192)
         pg.display.flip()
 
 

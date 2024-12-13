@@ -46,10 +46,11 @@ class Player(Sprite):
             self.double_jump()
         if keys[pg.K_a]:
             self.vel.x -= self.speed
-        # if keys[pg.K_s]:
-        #     self.vy += self.speed
         if keys[pg.K_d]:
             self.vel.x += self.speed
+        if keys[pg.K_AMPERSAND]:
+            self.game.next_level()
+
 
     def jump(self):
         # Technically, the player isn't on the platform, they are right above it, so this peeks to see if
@@ -132,6 +133,9 @@ class Player(Sprite):
             if str(hits[0].__class__.__name__) == "Portal":
                 print("Collided with portal")
                 self.game.next_level()
+
+            if str(hits[0].__class__.__name__) == "Boss":
+                print("collided with boss")
                 
 
 
@@ -260,7 +264,7 @@ class Boss(Sprite):
         Sprite.__init__(self, self.groups)
         self.image = pg.Surface((TILESIZE * 4,TILESIZE * 4))
         self.rect = self.image.get_rect()
-        # mob is green
+        # Boss is green
         self.image.fill(GREEN)
         self.rect.x = x * TILESIZE * 4
         self.rect.y = y * TILESIZE * 4

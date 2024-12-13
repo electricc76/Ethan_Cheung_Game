@@ -230,7 +230,7 @@ class Game:
         self.draw_text(self.screen, str(self.dt*1000), 24, WHITE, WIDTH / 24, HEIGHT / 24)
         self.draw_text(self.screen, "Total Coins: " + str(self.coins), 24, WHITE, WIDTH / 3, HEIGHT / 192)
         self.draw_text(self.screen, "Current Coins: " + str(self.player.level_coins), 24, WHITE, 2 * WIDTH / 3, HEIGHT / 192)
-        self.draw_text(self.screen, "Timer: "+str(ticks/1000), 24, WHITE, WIDTH / 2, HEIGHT / 192)
+        self.draw_text(self.screen, "Timer: " + str(round(ticks/1000, 1)), 24, WHITE, WIDTH / 2, HEIGHT / 192)
         self.draw_text(self.screen, "Deaths: "+str(self.death_counter), 24, WHITE, WIDTH / 6, HEIGHT / 192)
         pg.display.flip()
 

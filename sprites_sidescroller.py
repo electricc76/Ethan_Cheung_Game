@@ -48,8 +48,6 @@ class Player(Sprite):
             self.vel.x -= self.speed
         if keys[pg.K_d]:
             self.vel.x += self.speed
-        if keys[pg.K_AMPERSAND]:
-            self.game.next_level()
 
 
     def jump(self):

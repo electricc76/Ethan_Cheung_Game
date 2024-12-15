@@ -53,11 +53,12 @@ class Game:
         self.clock = pg.time.Clock()
         # is the game running or not? Yes
         self.running = True
-        self.level = 1
+        self.level = 9
         self.score = 0
         self.highscore = 0
         self.death_counter = 0
         self.coins = 0
+        self.stop_ticks = 0
     
     # loads all the data such as audio and level design by reading text file
     def load_data(self):
@@ -155,7 +156,7 @@ class Game:
             print("Congrats! You completed the game!")
             print("Deaths: "+str(self.death_counter))
             print("Coins Collected: "+str(self.coins))
-            print("Time: "+str(ticks/1000))
+            print("Time: "+str(self.stop_ticks))
 
 
     def new(self):
@@ -237,15 +238,16 @@ class Game:
     def draw(self):
         self.screen.fill(BLACK)
         self.all_sprites.draw(self.screen)
-        ticks = pg.time.get_ticks()
+
         self.draw_text(self.screen, str(self.dt*1000), 24, WHITE, WIDTH / 24, HEIGHT / 24)
         self.draw_text(self.screen, "Total Coins: " + str(self.coins), 24, WHITE, WIDTH / 3, HEIGHT / 192)
         self.draw_text(self.screen, "Current Coins: " + str(self.player.level_coins), 24, WHITE, 2 * WIDTH / 3, HEIGHT / 192)
         if self.level == 10:
-            self.finaltime = ticks/1000
-            self.draw_text(self.screen, "Timer: "+str(self.finaltime), 24, WHITE, WIDTH / 2, HEIGHT / 192)
+            self.draw_text(self.screen, "Timer: "+str(self.stop_ticks), 24, WHITE, WIDTH / 2, HEIGHT / 192)
         else:
-            self.draw_text(self.screen, "Timer: "+str(ticks/1000), 24, WHITE, WIDTH / 2, HEIGHT / 192)
+            self.stop_ticks = pg.time.get_ticks()/1000
+            self.draw_text(self.screen, "Timer: "+str(self.stop_ticks), 24, WHITE, WIDTH / 2, HEIGHT / 192)
+
         self.draw_text(self.screen, "Deaths: "+str(self.death_counter), 24, WHITE, WIDTH / 6, HEIGHT / 192)
         pg.display.flip()
 

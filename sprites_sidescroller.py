@@ -4,6 +4,7 @@ import pygame as pg
 from pygame.sprite import Sprite
 from settings import *
 import random
+import math
 
 # vector - force and direction
 # (x, y)
@@ -165,6 +166,7 @@ class Player(Sprite):
         self.collide_with_stuff(self.game.all_spikes, False)
         self.collide_with_stuff(self.game.all_mobs, False)
         self.collide_with_stuff(self.game.all_portals, False)
+        self.collide_with_stuff(self.game.all_bosses, False)
 
         # check for x position then correct it. Check for y position then correct it. Order is critical
         self.rect.x = self.pos.x
@@ -172,6 +174,10 @@ class Player(Sprite):
 
         self.rect.y = self.pos.y
         self.collide_with_walls('y')
+
+        global player_pos_x, player_pos_y
+        player_pos_x = self.pos.x
+        player_pos_y = self.pos.y
 
 class Mob(Sprite):
     def __init__(self, game, x, y):
@@ -254,17 +260,67 @@ class Portal(Sprite):
         self.rect.y = y * TILESIZE
 
 
+class Bullet(Sprite):
+    def __init__(self, game, x, y):
+        self.game = game
+        self.groups = game.all_sprites, game.all_bullets
+        Sprite.__init__(self, self.groups)
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(GREEN)
+        self.rect = self.image.get_rect()
+        self.rect.x = x + TILESIZE
+        self.rect.y = y + TILESIZE
+        self.opposite = player_pos_y/TILESIZE - self.rect.y/TILESIZE
+        self.adjacent = self.rect.x/TILESIZE - player_pos_x/TILESIZE
+        self.angle = math.atan(self.opposite / self.adjacent)
+        if player_pos_x > self.rect.x:
+            self.speed_x = -15*math.cos(self.angle)
+            self.speed_y = -15*math.sin(self.angle)
+        else:
+            self.speed_x = 15*math.cos(self.angle)
+            self.speed_y = 15*math.sin(self.angle)
+
+
+    def update(self):
+        self.rect.x -= self.speed_x
+        self.rect.y += self.speed_y
+
+        if self.rect.x < TILESIZE or self.rect.x > WIDTH-TILESIZE or self.rect.y > HEIGHT-TILESIZE-TILESIZE or self.rect.y < TILESIZE:
+            self.kill()
+
+
 class Boss(Sprite):
     def __init__(self, game, x, y):
         self.game = game
         self.groups = game.all_sprites, game.all_bosses
         # initialize yourself in all of your groups
         Sprite.__init__(self, self.groups)
-        self.image = pg.Surface((TILESIZE * 4,TILESIZE * 4))
+        self.image = pg.Surface((TILESIZE * 3, TILESIZE * 3))
         self.rect = self.image.get_rect()
         # Boss is green
         self.image.fill(GREEN)
-        self.rect.x = x * TILESIZE * 4
-        self.rect.y = y * TILESIZE * 4
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+        print("Boss Created")
+        self.attack_timer = 0
+        self.speed = 10
+        global boss_position
+        boss_position = vec(x*TILESIZE, y*TILESIZE)
+
+
     def update(self):
-        pass
+        self.attack_timer += 1
+        if self.attack_timer == 5:
+            Bullet(self.game, self.rect.x, self.rect.y)
+            self.attack_timer = 0
+
+        # change your position based on the speed number
+        self.rect.x += self.speed
+        # if your right hits the width of the screen - 1 tile, turn around. Same with left side
+
+        hits = pg.sprite.spritecollide(self, self.game.all_walls, False)
+        if hits:
+            if self.rect.right > 0:
+                self.speed *= -1
+            if self.rect.left < 0:
+                self.speed *= -1

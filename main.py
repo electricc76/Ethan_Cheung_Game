@@ -88,6 +88,10 @@ class Game:
         self.powerup_snd = pg.mixer.Sound(path.join(self.snd_folder, 'powerup.wav'))
         self.coin_snd = pg.mixer.Sound(path.join(self.snd_folder, 'coin.mp3'))
 
+        pg.mixer.music.load(path.join(self.snd_folder, 'background_music.mp3'))
+        pg.mixer.music.set_volume(VOLUME)
+        pg.mixer.music.play(loops=-1)
+
     def death(self):
         # remove all existing sprites before redrawing them on
         for s in self.all_sprites:
@@ -146,6 +150,12 @@ class Game:
                     Portal(self, col, row)
                 if tile == 'B':
                     Boss(self, col, row)
+        if self.level == 10:
+            ticks = pg.time.get_ticks()
+            print("Congrats! You completed the game!")
+            print("Deaths: "+str(self.death_counter))
+            print("Coins Collected: "+str(self.coins))
+            print("Time: "+str(ticks/1000))
 
 
     def new(self):
@@ -231,7 +241,11 @@ class Game:
         self.draw_text(self.screen, str(self.dt*1000), 24, WHITE, WIDTH / 24, HEIGHT / 24)
         self.draw_text(self.screen, "Total Coins: " + str(self.coins), 24, WHITE, WIDTH / 3, HEIGHT / 192)
         self.draw_text(self.screen, "Current Coins: " + str(self.player.level_coins), 24, WHITE, 2 * WIDTH / 3, HEIGHT / 192)
-        self.draw_text(self.screen, "Timer: "+str(ticks/1000), 24, WHITE, WIDTH / 2, HEIGHT / 192)
+        if self.level == 10:
+            self.finaltime = ticks/1000
+            self.draw_text(self.screen, "Timer: "+str(self.finaltime), 24, WHITE, WIDTH / 2, HEIGHT / 192)
+        else:
+            self.draw_text(self.screen, "Timer: "+str(ticks/1000), 24, WHITE, WIDTH / 2, HEIGHT / 192)
         self.draw_text(self.screen, "Deaths: "+str(self.death_counter), 24, WHITE, WIDTH / 6, HEIGHT / 192)
         pg.display.flip()
 

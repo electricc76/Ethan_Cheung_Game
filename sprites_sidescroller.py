@@ -135,7 +135,13 @@ class Player(Sprite):
 
             if str(hits[0].__class__.__name__) == "Boss":
                 print("collided with boss")
-                
+                self.game.death_snd.play()
+                self.game.death()
+            
+            if str(hits[0].__class__.__name__) == "Bullet":
+                print("Got Shot")
+                self.game.death_snd.play()
+                self.game.death()
 
 
     def update(self):
@@ -167,6 +173,7 @@ class Player(Sprite):
         self.collide_with_stuff(self.game.all_mobs, False)
         self.collide_with_stuff(self.game.all_portals, False)
         self.collide_with_stuff(self.game.all_bosses, False)
+        self.collide_with_stuff(self.game.all_bullets, False)
 
         # check for x position then correct it. Check for y position then correct it. Order is critical
         self.rect.x = self.pos.x
@@ -268,24 +275,27 @@ class Bullet(Sprite):
         self.image = pg.Surface((TILESIZE, TILESIZE))
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
+        self.bullet_speed = 10
+
         self.rect.x = x + TILESIZE
         self.rect.y = y + TILESIZE
         self.opposite = player_pos_y/TILESIZE - self.rect.y/TILESIZE
         self.adjacent = self.rect.x/TILESIZE - player_pos_x/TILESIZE
         self.angle = math.atan(self.opposite / self.adjacent)
         if player_pos_x > self.rect.x:
-            self.speed_x = -15*math.cos(self.angle)
-            self.speed_y = -15*math.sin(self.angle)
+            self.speed_x = -self.bullet_speed*math.cos(self.angle)
+            self.speed_y = -self.bullet_speed*math.sin(self.angle)
         else:
-            self.speed_x = 15*math.cos(self.angle)
-            self.speed_y = 15*math.sin(self.angle)
+            self.speed_x = self.bullet_speed*math.cos(self.angle)
+            self.speed_y = self.bullet_speed*math.sin(self.angle)
 
 
     def update(self):
         self.rect.x -= self.speed_x
         self.rect.y += self.speed_y
 
-        if self.rect.x < TILESIZE or self.rect.x > WIDTH-TILESIZE or self.rect.y > HEIGHT-TILESIZE-TILESIZE or self.rect.y < TILESIZE:
+        hits = pg.sprite.spritecollide(self, self.game.all_walls, False)
+        if hits:
             self.kill()
 
 
@@ -303,14 +313,14 @@ class Boss(Sprite):
         self.rect.y = y * TILESIZE
         print("Boss Created")
         self.attack_timer = 0
-        self.speed = 10
+        self.speed = 5
         global boss_position
         boss_position = vec(x*TILESIZE, y*TILESIZE)
 
 
     def update(self):
         self.attack_timer += 1
-        if self.attack_timer == 5:
+        if self.attack_timer == 30:
             Bullet(self.game, self.rect.x, self.rect.y)
             self.attack_timer = 0
 

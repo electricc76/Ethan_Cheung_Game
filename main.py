@@ -53,7 +53,7 @@ class Game:
         self.clock = pg.time.Clock()
         # is the game running or not? Yes
         self.running = True
-        self.level = 9
+        self.level = 1
         self.score = 0
         self.highscore = 0
         self.death_counter = 0

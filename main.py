@@ -22,6 +22,7 @@ When the player collides with a mob, the player dies
 '''
 Sources:
 Mr. Cozort for portal code
+Dad for idea to use trig in bullet direction calculation
 
 '''
 
